@@ -6,6 +6,9 @@ const goalSchema = mongoose.Schema(
       type: String,
       required: ["true", "please add a goal description"],
     },
+    completed: {
+      type: Boolean,
+    },
   },
   {
     timestamps: true,
