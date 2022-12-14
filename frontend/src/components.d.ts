@@ -18,6 +18,12 @@ export namespace Components {
         "goals": Array<any>;
     }
     interface GoalForm {
+        "_id": string;
+        "action": string;
+        "completed": boolean;
+        "goal": string;
+        "handleCreate": Function;
+        "handleUpdate": Function;
     }
 }
 declare global {
@@ -71,6 +77,12 @@ declare namespace LocalJSX {
         "goals"?: Array<any>;
     }
     interface GoalForm {
+        "_id"?: string;
+        "action"?: string;
+        "completed"?: boolean;
+        "goal"?: string;
+        "handleCreate"?: Function;
+        "handleUpdate"?: Function;
     }
     interface IntrinsicElements {
         "app-home": AppHome;

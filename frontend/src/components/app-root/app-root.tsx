@@ -1,4 +1,4 @@
-import { Component, h, State } from '@stencil/core';
+import { Component, h, Method, State } from '@stencil/core';
 
 @Component({
   tag: 'app-root',
@@ -8,22 +8,46 @@ import { Component, h, State } from '@stencil/core';
 export class AppRoot {
   @State() goals: Array<any>;
   @State() showForm: boolean = false;
+  @State() goal: string = '';
+  @State() completed: boolean = false;
+  @State() _id: string = '';
+  @State() action: string = 'create';
+
   url = 'http://localhost:8000/api/goals';
 
-  toggleForm() {
-    this.showForm = !this.showForm;
-    console.log(this.showForm);
-  }
+  // toggleForm() {
+  //   this.showForm = !this.showForm;
+  //   console.log(this.showForm);
+  // }
 
-  async getTodos() {
+  async getGoals() {
     const response = await fetch(this.url);
     const data = await response.json();
     this.goals = data;
     console.log(this.goals);
   }
 
+  resetState() {
+    this.getGoals();
+    this.action = 'create';
+    this.goal = '';
+    this._id = '';
+  }
+
+  async handleCreate(data) {
+    console.log('data: ', data);
+    await fetch(this.url, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    this.resetState();
+  }
+
   connectedCallback() {
-    this.getTodos();
+    this.getGoals();
   }
 
   render() {
@@ -34,9 +58,8 @@ export class AppRoot {
         </header>
 
         <main>
-          <button onClick={this.toggleForm}>click</button>
+          <goal-form goal={this.goal} completed={this.completed} _id={this._id} action={this.action} handleCreate={d => this.handleCreate(d)}></goal-form>
           <display-goals goals={this.goals}></display-goals>
-          {this.showForm ? <goal-form></goal-form> : null}
         </main>
       </div>
     );
