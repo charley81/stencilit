@@ -9,9 +9,10 @@ export class AddGoal {
   private url = 'http://localhost:8000/api/goals';
 
   @State() value: string;
-  @State() data;
+  @State() data: [] = [];
 
   async handleSubmit(e) {
+    console.log('clicked submit');
     e.preventDefault();
     const goal = {
       goal: this.value,
@@ -25,7 +26,8 @@ export class AddGoal {
           'Content-Type': 'application/json',
         },
       });
-      console.log(await response.json());
+      this.data = await response.json();
+      console.log(this.data);
     } catch (error) {
       console.log(error);
     }

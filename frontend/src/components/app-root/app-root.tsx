@@ -6,7 +6,7 @@ import { Component, h, State } from '@stencil/core';
   shadow: true,
 })
 export class AppRoot {
-  @State() goals: Array<any>;
+  @State() goals: Array<any> = [];
 
   url = 'http://localhost:8000/api/goals';
 
@@ -15,7 +15,6 @@ export class AppRoot {
       const response = await fetch(this.url);
       const data = await response.json();
       this.goals = data;
-      console.log(this.goals);
     } catch (error) {
       console.log(error);
     }
@@ -39,6 +38,10 @@ export class AppRoot {
     this.getGoals();
   }
 
+  componentWillUpdate() {
+    this.getGoals();
+  }
+
   render() {
     return (
       <div>
@@ -50,6 +53,7 @@ export class AppRoot {
         {/* main */}
         <main>
           <add-goal></add-goal>
+          {this.goals.length && <display-goals goals={this.goals}></display-goals>}
         </main>
       </div>
     );

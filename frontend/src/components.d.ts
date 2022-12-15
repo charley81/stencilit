@@ -10,6 +10,9 @@ export namespace Components {
     }
     interface AppRoot {
     }
+    interface DisplayGoals {
+        "goals": any[];
+    }
 }
 declare global {
     interface HTMLAddGoalElement extends Components.AddGoal, HTMLStencilElement {
@@ -24,9 +27,16 @@ declare global {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    interface HTMLDisplayGoalsElement extends Components.DisplayGoals, HTMLStencilElement {
+    }
+    var HTMLDisplayGoalsElement: {
+        prototype: HTMLDisplayGoalsElement;
+        new (): HTMLDisplayGoalsElement;
+    };
     interface HTMLElementTagNameMap {
         "add-goal": HTMLAddGoalElement;
         "app-root": HTMLAppRootElement;
+        "display-goals": HTMLDisplayGoalsElement;
     }
 }
 declare namespace LocalJSX {
@@ -34,9 +44,13 @@ declare namespace LocalJSX {
     }
     interface AppRoot {
     }
+    interface DisplayGoals {
+        "goals"?: any[];
+    }
     interface IntrinsicElements {
         "add-goal": AddGoal;
         "app-root": AppRoot;
+        "display-goals": DisplayGoals;
     }
 }
 export { LocalJSX as JSX };
@@ -45,6 +59,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "add-goal": LocalJSX.AddGoal & JSXBase.HTMLAttributes<HTMLAddGoalElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "display-goals": LocalJSX.DisplayGoals & JSXBase.HTMLAttributes<HTMLDisplayGoalsElement>;
         }
     }
 }
