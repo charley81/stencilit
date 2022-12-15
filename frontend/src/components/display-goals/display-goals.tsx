@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h } from '@stencil/core';
 
 @Component({
   tag: 'display-goals',
@@ -6,19 +6,13 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: true,
 })
 export class DisplayGoals {
-  @Prop() goals: Array<any>;
 
   render() {
     return (
       <Host>
-        {this.goals ? (
-          this.goals.map(goal => {
-            return <h3>{goal.text}</h3>;
-          })
-        ) : (
-          <h1>no goals...</h1>
-        )}
+        <slot></slot>
       </Host>
     );
   }
+
 }

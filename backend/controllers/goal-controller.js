@@ -15,12 +15,14 @@ const getGoals = asyncHandler(async (req, res) => {
 const createGoal = asyncHandler(async (req, res) => {
   if (!req.body.goal) {
     res.status(400);
-    throw new Error("please add a text field");
+    throw new Error("please add a goal");
   }
 
   const goal = await Goals.create({
-    text: req.body.text,
+    goal: req.body.goal,
   });
+
+  console.log(goal);
 
   res.status(200).json(goal);
 });
