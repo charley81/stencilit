@@ -18,6 +18,7 @@ export namespace Components {
     }
     interface DisplayGoals {
         "goals": any[];
+        "handleDelete": Function;
         "selectGoal": Function;
     }
 }
@@ -59,6 +60,7 @@ declare namespace LocalJSX {
     }
     interface DisplayGoals {
         "goals"?: any[];
+        "handleDelete"?: Function;
         "selectGoal"?: Function;
     }
     interface IntrinsicElements {

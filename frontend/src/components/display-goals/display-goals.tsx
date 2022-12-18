@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from '@stencil/core';
+import { Component, Host, h, Prop, Fragment } from '@stencil/core';
 
 @Component({
   tag: 'display-goals',
@@ -8,7 +8,7 @@ import { Component, Host, h, Prop } from '@stencil/core';
 export class DisplayGoals {
   @Prop() goals: any[] = [];
   @Prop() selectGoal: Function;
-
+  @Prop() handleDelete: Function;
   render() {
     return (
       <Host>
@@ -16,9 +16,12 @@ export class DisplayGoals {
           <ul>
             {this.goals.map(goal => {
               return (
-                <li key={goal._id} onClick={() => this.selectGoal(goal)}>
-                  {goal.description} | {goal.isCompleted ? '✅' : '🗑️'}
-                </li>
+                <Fragment>
+                  <li key={goal._id} onClick={() => this.selectGoal(goal)}>
+                    {goal.description} | {goal.isCompleted ? '✅' : '❌'}
+                  </li>
+                  <button onClick={() => this.handleDelete(goal)}>delete</button>
+                </Fragment>
               );
             })}
           </ul>

@@ -54,7 +54,6 @@ export class AppRoot {
   }
 
   async handleUpdate(data: any) {
-    console.log('handleUpdate', data);
     try {
       await fetch(`${this.URL}/${data.id}`, {
         method: 'PUT',
@@ -62,6 +61,19 @@ export class AppRoot {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    this.resetState();
+  }
+
+  async handleDelete(data: any) {
+    console.log(data);
+    try {
+      await fetch(`${this.URL}/${data._id}`, {
+        method: 'DELETE',
+        body: data,
       });
     } catch (error) {
       console.log(error);
@@ -94,7 +106,7 @@ export class AppRoot {
           {/* button */}
           <button onClick={() => this.toggleForm()}>create</button>
           {/* display goals */}
-          <display-goals goals={this.goals} selectGoal={d => this.selectGoal(d)}></display-goals>
+          <display-goals goals={this.goals} selectGoal={d => this.selectGoal(d)} handleDelete={d => this.handleDelete(d)}></display-goals>
           {/* add form */}
           {this.showForm && (
             <add-form
