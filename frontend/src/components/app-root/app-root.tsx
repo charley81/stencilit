@@ -6,15 +6,33 @@ import { Component, h, State } from '@stencil/core';
   shadow: true,
 })
 export class AppRoot {
-  @State() goals: Array<any> = [];
+  @State() goals: any[] = [];
+  @State() showForm: boolean = false;
+  @State() description: string = '';
+  @State() isCompleted: boolean = false;
+  @State() _id: string = '';
+  @State() action: string = 'create';
 
-  url = 'http://localhost:8000/api/goals';
+  private URL = 'http://localhost:8000/api/goals';
+
+  resetState() {
+    this.getGoals();
+    this.showForm = false;
+    this.description = '';
+    this.isCompleted = false;
+    this._id = '';
+    this.action = 'create';
+  }
+
+  toggleForm() {
+    this.showForm = !this.showForm;
+  }
 
   async getGoals() {
     try {
-      const response = await fetch(this.url);
-      const data = await response.json();
-      this.goals = data;
+      const response = await fetch(this.URL);
+      const json = await response.json();
+      this.goals = json;
     } catch (error) {
       console.log(error);
     }
@@ -22,8 +40,8 @@ export class AppRoot {
 
   async handleCreate(data: any) {
     try {
-      await fetch(this.url, {
-        method: 'post',
+      await fetch(this.URL, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -32,13 +50,34 @@ export class AppRoot {
     } catch (error) {
       console.log(error);
     }
+    this.resetState();
   }
 
-  componentWillLoad() {
-    this.getGoals();
+  async handleUpdate(data: any) {
+    console.log('handleUpdate', data);
+    try {
+      await fetch(`${this.URL}/${data.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    this.resetState();
   }
 
-  componentWillUpdate() {
+  selectGoal(goal) {
+    this.showForm = true;
+    this.description = goal.description;
+    this._id = goal._id;
+    this.isCompleted = goal.isCompleted;
+    this.action = 'update';
+  }
+
+  connectedCallback() {
     this.getGoals();
   }
 
@@ -52,8 +91,21 @@ export class AppRoot {
 
         {/* main */}
         <main>
-          <add-goal></add-goal>
-          {this.goals.length && <display-goals goals={this.goals}></display-goals>}
+          {/* button */}
+          <button onClick={() => this.toggleForm()}>create</button>
+          {/* display goals */}
+          <display-goals goals={this.goals} selectGoal={d => this.selectGoal(d)}></display-goals>
+          {/* add form */}
+          {this.showForm && (
+            <add-form
+              description={this.description}
+              action={this.action}
+              isCompleted={this.isCompleted}
+              id={this._id}
+              handleCreate={d => this.handleCreate(d)}
+              handleUpdate={d => this.handleUpdate(d)}
+            ></add-form>
+          )}
         </main>
       </div>
     );

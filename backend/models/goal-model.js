@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 
 const goalSchema = mongoose.Schema(
   {
-    goal: {
+    description: {
       type: String,
       required: ["true", "please add a goal description"],
     },
+    isCompleted: { type: Boolean },
   },
   {
     timestamps: true,

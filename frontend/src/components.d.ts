@@ -6,20 +6,27 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface AddGoal {
+    interface AddForm {
+        "action": string;
+        "description": string;
+        "handleCreate": Function;
+        "handleUpdate": Function;
+        "id": string;
+        "isCompleted": boolean;
     }
     interface AppRoot {
     }
     interface DisplayGoals {
         "goals": any[];
+        "selectGoal": Function;
     }
 }
 declare global {
-    interface HTMLAddGoalElement extends Components.AddGoal, HTMLStencilElement {
+    interface HTMLAddFormElement extends Components.AddForm, HTMLStencilElement {
     }
-    var HTMLAddGoalElement: {
-        prototype: HTMLAddGoalElement;
-        new (): HTMLAddGoalElement;
+    var HTMLAddFormElement: {
+        prototype: HTMLAddFormElement;
+        new (): HTMLAddFormElement;
     };
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
     }
@@ -34,21 +41,28 @@ declare global {
         new (): HTMLDisplayGoalsElement;
     };
     interface HTMLElementTagNameMap {
-        "add-goal": HTMLAddGoalElement;
+        "add-form": HTMLAddFormElement;
         "app-root": HTMLAppRootElement;
         "display-goals": HTMLDisplayGoalsElement;
     }
 }
 declare namespace LocalJSX {
-    interface AddGoal {
+    interface AddForm {
+        "action"?: string;
+        "description"?: string;
+        "handleCreate"?: Function;
+        "handleUpdate"?: Function;
+        "id"?: string;
+        "isCompleted"?: boolean;
     }
     interface AppRoot {
     }
     interface DisplayGoals {
         "goals"?: any[];
+        "selectGoal"?: Function;
     }
     interface IntrinsicElements {
-        "add-goal": AddGoal;
+        "add-form": AddForm;
         "app-root": AppRoot;
         "display-goals": DisplayGoals;
     }
@@ -57,7 +71,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "add-goal": LocalJSX.AddGoal & JSXBase.HTMLAttributes<HTMLAddGoalElement>;
+            "add-form": LocalJSX.AddForm & JSXBase.HTMLAttributes<HTMLAddFormElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "display-goals": LocalJSX.DisplayGoals & JSXBase.HTMLAttributes<HTMLDisplayGoalsElement>;
         }

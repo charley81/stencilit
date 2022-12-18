@@ -13,16 +13,15 @@ const getGoals = asyncHandler(async (req, res) => {
 // @route  POST /api/goals
 // @access Private
 const createGoal = asyncHandler(async (req, res) => {
-  if (!req.body.goal) {
+  if (!req.body.description) {
     res.status(400);
     throw new Error("please add a goal");
   }
 
   const goal = await Goals.create({
-    goal: req.body.goal,
+    description: req.body.description,
+    isCompleted: req.body.isCompleted,
   });
-
-  console.log(goal);
 
   res.status(200).json(goal);
 });
@@ -38,7 +37,7 @@ const updateGoal = asyncHandler(async (req, res) => {
     throw new Error(`Goal ${req.params.id} not found`);
   }
 
-  const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
+  const updatedGoal = await Goals.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
 

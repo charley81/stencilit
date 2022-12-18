@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { AddGoal } from '../add-goal';
+import { AddForm } from '../add-form';
 
-describe('add-goal', () => {
+describe('add-form', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [AddGoal],
-      html: `<add-goal></add-goal>`,
+      components: [AddForm],
+      html: `<add-form></add-form>`,
     });
     expect(page.root).toEqualHtml(`
-      <add-goal>
+      <add-form>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </add-goal>
+      </add-form>
     `);
   });
 });

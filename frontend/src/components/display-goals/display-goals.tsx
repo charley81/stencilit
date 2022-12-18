@@ -6,22 +6,24 @@ import { Component, Host, h, Prop } from '@stencil/core';
   shadow: true,
 })
 export class DisplayGoals {
-  @Prop() goals: any[];
+  @Prop() goals: any[] = [];
+  @Prop() selectGoal: Function;
 
   render() {
     return (
       <Host>
         {this.goals.length ? (
-          <div>
-            <h3>display goals</h3>
-            <ul>
-              {this.goals.map(goal => (
-                <li>{goal.goal}</li>
-              ))}
-            </ul>
-          </div>
+          <ul>
+            {this.goals.map(goal => {
+              return (
+                <li key={goal._id} onClick={() => this.selectGoal(goal)}>
+                  {goal.description} | {goal.isCompleted ? '✅' : '🗑️'}
+                </li>
+              );
+            })}
+          </ul>
         ) : (
-          <h3>hmmmm.... can't find any goals stenciled</h3>
+          <h3>no goals yet...</h3>
         )}
       </Host>
     );
